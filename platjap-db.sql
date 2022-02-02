@@ -18,7 +18,7 @@ CREATE TABLE `plats` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     `image` VARCHAR(255) NOT NULL,
-    `id_admin` INT NOT NULL,
+    `id_admin` INT,
     FOREIGN KEY (id_admin) REFERENCES admins(id)
 );
 

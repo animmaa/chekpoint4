@@ -1,6 +1,5 @@
 const ingredientsRouter = require('express').Router();
 const ingredient = require('../models/ingredientsModel');
-//const dishe = require('../models/dishesModel');
 
 ingredientsRouter.get('/', async (req, res) => {
   const [ingre] = await ingredient.findAllIngredients(req.query);
@@ -16,6 +15,14 @@ ingredientsRouter.get('/:id', async (req, res) => {
   }
 });
 
+ingredientsRouter.get('/liste/:id', async (req, res) => {
+  const [listForIngredients] = await ingredient.listPlatByIngredient(req.params.id);
+  if (listForIngredients) {
+    res.json(listForIngredients);
+  } else {
+    res.status(404).json();
+  }
+});
 
 
 module.exports = ingredientsRouter;

@@ -5,10 +5,20 @@ require('dotenv').config();
 const checkJwt = (req, res, next) => {
   if (!req.headers.authorization) {
     res.status(401).json('pas de clé');
+
+
+
+    
   }
 
   try {
     const checkedJwt = jwt.verify(
+
+
+
+
+
+
       req.headers.authorization,
       process.env.JWT_SECRET
     );

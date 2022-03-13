@@ -10,7 +10,7 @@ const checkJwt = (req, res, next) => {
   try {
     const checkedJwt = jwt.verify(
       req.headers.authorization,
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
     );
     console.log(checkedJwt);
     return next();

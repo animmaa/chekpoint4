@@ -9,7 +9,7 @@ dishesRouter.get('/', async (req, res) => {
 
 dishesRouter.get('/liste', async (req, res) => {
   const [listing] = await dishe.list(req.query);
-  res.json(listing)
+  res.json(listing);
 });
 dishesRouter.get('/:id', async (req, res) => {
   const [[name]] = await dishe.findOneDisheById(req.params.id);
@@ -29,15 +29,14 @@ dishesRouter.get('/liste/:id', async (req, res) => {
   }
 });
 
-
 dishesRouter.post('/', checkJwt, async (req, res) => {
-    const [{ insertId }] = await dishe.insertDishe(req.body);
-    const newPlats = req.body;
-    res.status(201).json({
-        id: insertId,
-        ...newPlats,
-    })
-})
+  const [{ insertId }] = await dishe.insertDishe(req.body);
+  const newPlats = req.body;
+  res.status(201).json({
+    id: insertId,
+    ...newPlats,
+  });
+});
 
 dishesRouter.delete('/:id', async (req, res) => {
   await dishe.deleteDishe(req.params.id);

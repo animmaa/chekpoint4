@@ -1,6 +1,6 @@
-connection = require('../config/db-config')
+const connection = require('../config/db-config');
 
-findAdminByEmail = (name) => connection.promise().query('SELECT * FROM admins WHERE name = ?', [name]);
+const findAdminByEmail = (name) => connection.promise().query('SELECT * FROM admins WHERE name = ?', [name]);
 
 module.exports = {
   findAdminByEmail,

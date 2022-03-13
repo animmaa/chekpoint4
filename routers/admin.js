@@ -2,8 +2,7 @@ const loginRouter = require('express').Router();
 const Joi = require('joi');
 const argon2 = require('argon2');
 const { findAdminByEmail } = require('../models/admin');
-const {generateJwt} = require('../utils/auth')
-
+const { generateJwt } = require('../utils/auth');
 
 const userShema = Joi.object({
   name: Joi.string().presence('required'),
@@ -12,7 +11,6 @@ const userShema = Joi.object({
 
 loginRouter.post('/login', async (req, res) => {
   const { value, error } = userShema.validate(req.body);
-  //console.log(value, error);
 
   if (error) {
     return res.status(400).json(error);
@@ -26,8 +24,6 @@ loginRouter.post('/login', async (req, res) => {
     });
   }
 
-  console.log(existingAdmin.password);
-
   const verified = await argon2.verify(existingAdmin.password, value.password);
 
   console.log(verified);
@@ -38,21 +34,10 @@ loginRouter.post('/login', async (req, res) => {
     });
   }
 
-  const jwtKey = generateJwt(value.name, 'admin')
-  console.log(generateJwt(value.name, 'admin'));
+  const jwtKey = generateJwt(value.name, 'admin');
 
-  
-
-  /* console.log(jwt.sign(
-    {
-      name: value.name,
-      role: 'admin',
-    },
-    process.env.JWT_SECRET
-  )); */
-
-  res.json({
-      credential: jwtKey,
+  return res.json({
+    credential: jwtKey,
   });
 });
 

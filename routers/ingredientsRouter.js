@@ -24,5 +24,4 @@ ingredientsRouter.get('/liste/:id', async (req, res) => {
   }
 });
 
-
 module.exports = ingredientsRouter;

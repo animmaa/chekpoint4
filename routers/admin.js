@@ -1,10 +1,9 @@
 const loginRouter = require('express').Router();
 const Joi = require('joi');
 const argon2 = require('argon2');
-const jwt = require('jsonwebtoken');
 const { findAdminByEmail } = require('../models/admin');
+const {generateJwt} = require('../utils/auth')
 
-require('dotenv').config();
 
 const userShema = Joi.object({
   name: Joi.string().presence('required'),
@@ -22,24 +21,39 @@ loginRouter.post('/login', async (req, res) => {
   const [[existingAdmin]] = await findAdminByEmail(value.name);
 
   if (!existingAdmin) {
-      return res.status(403).json({
-          message: "connexion error"
-      })
+    return res.status(403).json({
+      message: 'connexion error',
+    });
   }
 
-  console.log(existingAdmin.password)
+  console.log(existingAdmin.password);
 
-  const verified = await argon2.verify(existingAdmin.password, value.password)
+  const verified = await argon2.verify(existingAdmin.password, value.password);
 
   console.log(verified);
 
   if (!verified) {
-      return res.status(403).json({
-        message: 'connexion error',
-      });
+    return res.status(403).json({
+      message: 'connexion error',
+    });
   }
 
-  res.json(req.body);
+  const jwtKey = generateJwt(value.name, 'admin')
+  console.log(generateJwt(value.name, 'admin'));
+
+  
+
+  /* console.log(jwt.sign(
+    {
+      name: value.name,
+      role: 'admin',
+    },
+    process.env.JWT_SECRET
+  )); */
+
+  res.json({
+      credential: jwtKey,
+  });
 });
 
 module.exports = loginRouter;

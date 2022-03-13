@@ -1,4 +1,5 @@
 const dishesRouter = require('express').Router();
+const checkJwt = require('../middlewares/checkJwt');
 const dishe = require('../models/dishesModel');
 
 dishesRouter.get('/', async (req, res) => {
@@ -29,7 +30,7 @@ dishesRouter.get('/liste/:id', async (req, res) => {
 });
 
 
-dishesRouter.post('/', async (req, res) => {
+dishesRouter.post('/', checkJwt, async (req, res) => {
     const [{ insertId }] = await dishe.insertDishe(req.body);
     const newPlats = req.body;
     res.status(201).json({

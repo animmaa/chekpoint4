@@ -30,7 +30,7 @@ CREATE TABLE `plats_ingredients` (
     FOREIGN KEY (id_ingredients) REFERENCES ingredients(id)
 );
 
-INSERT INTO `admins`  (`name`,`password`) VALUES ('davy', 'password');
+INSERT INTO `admins`  (`name`,`password`) VALUES ('davy', '$argon2i$v=19$m=16,t=2,p=1$aGdVbmpNZUZnbHJGV2ltTA$LbvKR3RM5gcX1FCRo3yP6g');
 
 INSERT INTO `ingredients` (`name`) VALUES ('carrote'), ('pomme de terre'), ('sauce soja'), ("oignon"), ("ail"), ("boeuf"), ("boite de curry"), ("tofu"), ("algue"), ("miso"), ("dashi"), ("riz"), ("vinaigre"), ("sucre"), ("vinaigre de riz"), ("feuille d'algue"), ("saumon"), ("surimi"), ("thon"), ("oeuf");
 

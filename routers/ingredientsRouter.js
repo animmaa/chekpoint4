@@ -24,4 +24,13 @@ ingredientsRouter.get('/liste/:id', async (req, res) => {
   }
 });
 
+ingredientsRouter.post('/', async (req, res) => {
+  const [{ insertId }] = await ingredient.insertIngredient(req.body);
+  const newIngredient = req.body;
+  res.status(201).json({
+    id: insertId,
+    ...newIngredient,
+  });
+});
+
 module.exports = ingredientsRouter;

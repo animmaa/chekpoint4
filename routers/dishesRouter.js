@@ -1,5 +1,8 @@
 const dishesRouter = require('express').Router();
-const checkJwt = require('../middlewares/checkJwt');
+/* const checkJwt = require('../middlewares/checkJwt'); */
+const multer = require('multer');
+
+const upload = multer({ dest: 'uploads/test/' });
 const dishe = require('../models/dishesModel');
 
 dishesRouter.get('/', async (req, res) => {
@@ -29,13 +32,43 @@ dishesRouter.get('/liste/:id', async (req, res) => {
   }
 });
 
-dishesRouter.post('/', checkJwt, async (req, res) => {
+/* dishesRouter.post('/', upload.single('image'), (req, res) => {
+  res.json({
+    body: req.body,
+    file: req.file.filename
+  })
+}) */
+
+dishesRouter.post('/', upload.single('image'), async (req, res) => {
+  console.log(req.body, req.file);
+  const [{ insertId: id }] = await dishe.insertDishe(req.body, req.file.path);
+  res.json({
+    ...req.body,
+    id,
+    image: req.file.filename,
+  });
+});
+
+/* dishesRouter.post('/', checkJwt, async (req, res) => {
   const [{ insertId }] = await dishe.insertDishe(req.body);
   const newPlats = req.body;
   res.status(201).json({
     id: insertId,
     ...newPlats,
   });
+}); */
+
+/* dishesRouter.post('/', upload.single('image'), async (req, res) => {
+  const [{ insertId: id }] = await dishe.insertDishe(req.body, req.file.path);
+  res.status(201).json({
+    ...req.body,
+    id,
+    image: req.file.filename,
+  });
+}); */
+
+dishesRouter.post('/image/', upload.single('image'), (req, res) => {
+  res.json(req.file);
 });
 
 dishesRouter.delete('/:id', async (req, res) => {

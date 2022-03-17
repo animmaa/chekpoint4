@@ -10,9 +10,33 @@ const insertIngredient = ({ name }) => dataBase.query('INSERT INTO ingredients (
 
 const listPlatByIngredient = (id) => dataBase.query('SELECT plats.name, plats.id, image FROM ingredients RIGHT JOIN plats_ingredients ON ingredients.id=plats_ingredients.id_ingredients JOIN plats ON plats.id=plats_ingredients.id_plats WHERE ingredients.id=? ORDER BY plats.name ASC', [id]);
 
+/* const association = ({id_plats, id_ingredients}) =>
+dataBase.query('INSERT INTO plats_ingredients (id_plats, id_ingredients)
+VALUES (?, ?)', [id_plats, id_ingredients]
+  );
+
+const associationPlat = (id_ingredients, id_plats) => dataBase.query(
+    'INSERT INTO plats_ingredients (id_plats, id_ingredients) VALUES (?, ?)',
+    [id_plats, id_ingredients]
+  );
+
+const associationPlat2 = (id_plats) => dataBase.query(
+    'INSERT INTO plats_ingredients (id_plats) VALUES (?)',
+    [id_plats]
+  );
+
+const associationingre = ({ id_ingredients }) => dataBase.query(
+    'INSERT INTO plats_ingredients (id_ingredients) VALUES (?)',
+    [id_ingredients]
+  ); */
+
 module.exports = {
   findAllIngredients,
   findOneIngredientById,
   listPlatByIngredient,
   insertIngredient,
+  /* association,
+  associationPlat,
+  associationingre,
+  associationPlat2, */
 };

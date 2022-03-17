@@ -16,7 +16,9 @@ ingredientsRouter.get('/:id', async (req, res) => {
 });
 
 ingredientsRouter.get('/liste/:id', async (req, res) => {
-  const [listForIngredients] = await ingredient.listPlatByIngredient(req.params.id);
+  const [listForIngredients] = await ingredient.listPlatByIngredient(
+    req.params.id,
+  );
   if (listForIngredients) {
     res.json(listForIngredients);
   } else {
@@ -25,12 +27,86 @@ ingredientsRouter.get('/liste/:id', async (req, res) => {
 });
 
 ingredientsRouter.post('/', async (req, res) => {
-  const [{ insertId }] = await ingredient.insertIngredient(req.body);
+  const [{ insertName }] = await ingredient.insertIngredient(req.body);
+  const newIngredient = req.body;
+  res.status(201).json({
+    id: insertName,
+    ...newIngredient,
+  });
+});
+
+/* ingredientsRouter.post('/insert/:id', async (req, res) => {
+  const [ insertIngredient ] = await ingredient.association(req.body);
+  const [idduplat] = await ingredient.association(req.params.id);
   const newIngredient = req.body;
   res.status(201).json({
     id: insertId,
     ...newIngredient,
   });
+}); */
+
+ingredientsRouter.post('/insert', async (req, res) => {
+  const [{ insertIngredient }] = await ingredient.association(req.body);
+  const newAssociation = req.body;
+  res.status(201).json({
+    id: insertIngredient,
+    ...newAssociation,
+  });
 });
+
+/* ingredientsRouter.post('/insert/:id', async (req, res) => {
+  const [{ insertIngredient }] = await ingredient.associationingre(req.body);
+  //const newAssociation = req.body;
+  res.status(201).json({
+    id: insertIngredient,
+    ...newAssociation,
+  });
+}); */
+
+/* ingredientsRouter.post('/insert/:id', async (req, res) => {
+  const [{ insertIngredient }] = await ingredient.associationPlat2(req.params.id);
+  const newAssociation = req.body;
+  res.status(201).json({
+    id: insertIngredient,
+    ...newAssociation,
+  });
+}); */
+
+/* ingredientsRouter.post('/insert/:id', async (req, res) => {
+  const [{ insertIngredient }] = await ingredient.association(
+    req.params.id
+  );
+  const newAssociation = req.body;
+  res.status(201).json({
+    id: insertIngredient,
+    ...newAssociation,
+  });
+}); */
+
+/* ingredientsRouter.post('/insert/:id', async (req, res) => {
+  const { insertIngredient } = await ingredient.association(
+    {id_plats: req.params, id_ingredients: req.body}
+  );
+  const newAssociation = req.body;
+  res.status(201).json({
+    id: insertIngredient,
+    ...newAssociation,
+  });
+}); */
+
+/* ingredientsRouter.post('/insert/:id', async (req, res) => {
+  const idplat = req.params.id;
+  console.log(idplat)
+  const idIngredients = req.body.id_ingredients;
+  console.log(idIngredients)
+  const [insertIngredient] = await ingredient.associationPlat(10, 22);
+  console.log(insertIngredient);
+  const newAssociation = req.body;
+  res.status(201).json({
+    id: idplat,
+    insertIngredient: insertIngredient,
+    ...newAssociation,
+  });
+}); */
 
 module.exports = ingredientsRouter;

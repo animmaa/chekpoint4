@@ -6,6 +6,15 @@ ingredientsRouter.get('/', async (req, res) => {
   res.json(ingre);
 });
 
+ingredientsRouter.get('/test/:name', async (req, res) => {
+  const [[idIgred]] = await ingredient.findSpecificIngredient(req.params.name);
+  if (idIgred) {
+    res.json(idIgred);
+  } else {
+    res.status(404).json();
+  }
+});
+
 ingredientsRouter.get('/:id', async (req, res) => {
   const [[name]] = await ingredient.findOneIngredientById(req.params.id);
   if (name) {
@@ -17,7 +26,7 @@ ingredientsRouter.get('/:id', async (req, res) => {
 
 ingredientsRouter.get('/liste/:id', async (req, res) => {
   const [listForIngredients] = await ingredient.listPlatByIngredient(
-    req.params.id,
+    req.params.id
   );
   if (listForIngredients) {
     res.json(listForIngredients);
@@ -27,6 +36,7 @@ ingredientsRouter.get('/liste/:id', async (req, res) => {
 });
 
 ingredientsRouter.post('/', async (req, res) => {
+  console.log(req.body)
   const [{ insertName }] = await ingredient.insertIngredient(req.body);
   const newIngredient = req.body;
   res.status(201).json({
@@ -34,6 +44,24 @@ ingredientsRouter.post('/', async (req, res) => {
     ...newIngredient,
   });
 });
+
+/* ingredientsRouter.post('/', async (req, res) => {
+  const [{ insertName }] = await ingredient.insertIngredient(req.body);
+
+  if (error) {
+    return res.status(400).json(error);
+  }
+
+  try {
+    return res.status(200).json({
+      id: insertName,
+      ...req.body,
+    });
+  } catch (errors) {
+    console.log(errors);
+    return res.status(500).json({ errors });
+  }
+}); */
 
 /* ingredientsRouter.post('/insert/:id', async (req, res) => {
   const [ insertIngredient ] = await ingredient.association(req.body);

@@ -16,7 +16,9 @@ ingredientsRouter.get('/:id', async (req, res) => {
 });
 
 ingredientsRouter.get('/liste/:id', async (req, res) => {
-  const [listForIngredients] = await ingredient.listPlatByIngredient(req.params.id);
+  const [listForIngredients] = await ingredient.listPlatByIngredient(
+    req.params.id,
+  );
   if (listForIngredients) {
     res.json(listForIngredients);
   } else {
@@ -25,12 +27,18 @@ ingredientsRouter.get('/liste/:id', async (req, res) => {
 });
 
 ingredientsRouter.post('/', async (req, res) => {
-  const [{ insertId }] = await ingredient.insertIngredient(req.body);
+  console.log(req.body);
+  const [{ insertName }] = await ingredient.insertIngredient(req.body);
   const newIngredient = req.body;
   res.status(201).json({
-    id: insertId,
+    id: insertName,
     ...newIngredient,
   });
+});
+
+ingredientsRouter.post('/add/:id', async (req, res) => {
+  await ingredient.createIngredientMatch(req.body, req.params.id);
+  return res.status(201).json();
 });
 
 module.exports = ingredientsRouter;

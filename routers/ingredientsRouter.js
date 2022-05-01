@@ -41,4 +41,9 @@ ingredientsRouter.post('/add/:id', async (req, res) => {
   return res.status(201).json();
 });
 
+ingredientsRouter.delete('/delete/:id', async (req, res) => {
+  await ingredient.deleteMatchIngredient(req.params.id);
+  return res.status(204).json();
+});
+
 module.exports = ingredientsRouter;

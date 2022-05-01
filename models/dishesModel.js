@@ -8,7 +8,7 @@ const findOneDisheById = (id) => dataBase.query('SELECT * FROM plats WHERE id = 
 
 const insertDishe = ({ name, lienRecette }, image) => dataBase.query('INSERT INTO plats (name, image, lien_recette) VALUES (?, ?, ?)', [name, image, lienRecette]);
 
-const listIngredientsByPlat = (id) => dataBase.query('SELECT ingredients.name FROM plats RIGHT JOIN plats_ingredients ON plats.id=plats_ingredients.id_plats JOIN ingredients ON ingredients.id=plats_ingredients.id_ingredients WHERE plats.id=? ORDER BY ingredients.name ASC', [id]);
+const listIngredientsByPlat = (id) => dataBase.query('SELECT ingredients.name, plats_ingredients.id FROM plats RIGHT JOIN plats_ingredients ON plats.id=plats_ingredients.id_plats JOIN ingredients ON ingredients.id=plats_ingredients.id_ingredients WHERE plats.id=? ORDER BY ingredients.name ASC', [id]);
 
 const list = () => dataBase.query('SELECT * FROM plats RIGHT JOIN plats_ingredients ON plats.id=plats_ingredients.id_plats JOIN ingredients ON ingredients.id=plats_ingredients.id_ingredients');
 

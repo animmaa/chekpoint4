@@ -12,7 +12,9 @@ const insertIngredient = ({ name }) => dataBase.query('INSERT INTO ingredients (
 
 const listPlatByIngredient = (id) => dataBase.query('SELECT plats.name, plats.id, image FROM ingredients RIGHT JOIN plats_ingredients ON ingredients.id=plats_ingredients.id_ingredients JOIN plats ON plats.id=plats_ingredients.id_plats WHERE ingredients.id=? ORDER BY plats.name ASC', [id]);
 
-const createIngredientMatch = ({ idIngredients }, idPlats) => dataBase.query('INSERT INTO  plats_ingredients (id_plats, id_ingredients) VALUES (?, ?)', [idPlats, idIngredients]);
+const createIngredientMatch = ({ idIngredients }, idPlats) => dataBase.query('INSERT INTO plats_ingredients (id_plats, id_ingredients) VALUES (?, ?)', [idPlats, idIngredients]);
+
+const deleteMatchIngredient = (id) => dataBase.query('DELETE FROM plats_ingredients WHERE id = ?', [id]);
 
 module.exports = {
   findAllIngredients,
@@ -21,4 +23,5 @@ module.exports = {
   listPlatByIngredient,
   insertIngredient,
   createIngredientMatch,
+  deleteMatchIngredient,
 };

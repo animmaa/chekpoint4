@@ -26,7 +26,8 @@ CREATE TABLE `plats` (
 CREATE TABLE `plats_ingredients` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `id_plats` INT NOT NULL,
-    FOREIGN KEY (id_plats) REFERENCES plats(id),
+    FOREIGN KEY (id_plats) REFERENCES plats(id)
+    ON DELETE CASCADE,
     `id_ingredients` INT NOT NULL,
     FOREIGN KEY (id_ingredients) REFERENCES ingredients(id)
 );

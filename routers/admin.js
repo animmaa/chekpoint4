@@ -26,8 +26,6 @@ loginRouter.post('/login', async (req, res) => {
 
   const verified = await argon2.verify(existingAdmin.password, value.password);
 
-  console.log(verified);
-
   if (!verified) {
     return res.status(403).json({
       message: 'connexion error',

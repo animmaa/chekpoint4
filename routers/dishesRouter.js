@@ -1,5 +1,4 @@
 const dishesRouter = require('express').Router();
-/* const checkJwt = require('../middlewares/checkJwt'); */
 const multer = require('multer');
 
 const upload = multer({ dest: 'uploads/test/' });
@@ -48,15 +47,6 @@ dishesRouter.post('/', upload.single('image'), async (req, res) => {
     image: req.file.filename,
   });
 });
-
-/* dishesRouter.post('/', checkJwt, async (req, res) => {
-  const [{ insertId }] = await dishe.insertDishe(req.body);
-  const newPlats = req.body;
-  res.status(201).json({
-    id: insertId,
-    ...newPlats,
-  });
-}); */
 
 /* dishesRouter.post('/', upload.single('image'), async (req, res) => {
   const [{ insertId: id }] = await dishe.insertDishe(req.body, req.file.path);

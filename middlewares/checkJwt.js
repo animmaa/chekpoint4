@@ -16,7 +16,7 @@ const checkJwt = (req, res, next) => {
     return next();
   } catch (err) {
     console.log(err);
-    return res.status(401).json('clé non valise');
+    return res.status(401).json('clé non valide');
   }
 };
 
